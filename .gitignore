@@ -1,129 +1,109 @@
-# Byte-compiled / optimized / DLL files
-__pycache__/
-*.py[cod]
-*$py.class
+def provGorodov(vnutrSpisok,VvodGoroda):
+    global proverka
+    for z in vnutrSpisok:
+        if z == VvodGoroda:
+            proverka = 1
+            ispGoroda.append(z)
+            break
+        elif VvodGoroda != i:
+            proverka = 0
+            continue
+        else:
+            break
+    return(ispGoroda,proverka)
 
-# C extensions
-*.so
+def provNaPovtor(ispGoroda,VvodGoroda):
+    global Povtor
+    for i in ispGoroda:
+        if i == VvodGoroda:
+            Povtor = 0
+            break
+        elif i!=VvodGoroda:
+            Povtor = 1
+            continue
+    return(Povtor)
 
-# Distribution / packaging
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-pip-wheel-metadata/
-share/python-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-MANIFEST
+def proverkaNaPravila(VvodGoroda,lastBukva):
+    global k
+    if VvodGoroda[0]==lastBukva:
+        k=1
+    elif VvodGoroda[0]!=lastBukva:
+        k=0
+    return(k)
 
-# PyInstaller
-#  Usually these files are written by a python script from a template
-#  before PyInstaller builds the exe, so as to inject date/other infos into it.
-*.manifest
-*.spec
+def proverkaNaEnter():
+    global VvodGoroda
+    while len(VvodGoroda)==0:
+        if len(VvodGoroda)==0:
+            print('Введите название города:')
+            VvodGoroda = str(input().lower())
+        elif len(VvodGoroda)>=1:
+            continue
+    return(VvodGoroda)
 
-# Installer logs
-pip-log.txt
-pip-delete-this-directory.txt
+def proverkaNaZnakiIprobel():
+    global pervayaBukva
+    while True:
+        if pervayaBukva != 'а' and 'б' and'в'and'г' and'д' and 'е' and'ё'and'ж' and'з' and'и' and 'й' and 'к' and 'л' and'м' and'н'and'о'and'п'and'р'and'с'and'т'and'у'and'ф'and'х'and'ц'and'ч'and'ш'and'щ'and'ы'and'э'and'ю'and'я':
+            print('Введите одну букву, без:', pervayaBukva)
+            pervayaBukva = str(input().lower())
+        else:
+            break
+    return(pervayaBukva)
 
-# Unit test / coverage reports
-htmlcov/
-.tox/
-.nox/
-.coverage
-.coverage.*
-.cache
-nosetests.xml
-coverage.xml
-*.cover
-*.py,cover
-.hypothesis/
-.pytest_cache/
 
-# Translations
-*.mo
-*.pot
 
-# Django stuff:
-*.log
-local_settings.py
-db.sqlite3
-db.sqlite3-journal
 
-# Flask stuff:
-instance/
-.webassets-cache
-
-# Scrapy stuff:
-.scrapy
-
-# Sphinx documentation
-docs/_build/
-
-# PyBuilder
-target/
-
-# Jupyter Notebook
-.ipynb_checkpoints
-
-# IPython
-profile_default/
-ipython_config.py
-
-# pyenv
-.python-version
-
-# pipenv
-#   According to pypa/pipenv#598, it is recommended to include Pipfile.lock in version control.
-#   However, in case of collaboration, if having platform-specific dependencies or dependencies
-#   having no cross-platform support, pipenv may install dependencies that don't work, or not
-#   install all needed dependencies.
-#Pipfile.lock
-
-# PEP 582; used by e.g. github.com/David-OConnor/pyflow
-__pypackages__/
-
-# Celery stuff
-celerybeat-schedule
-celerybeat.pid
-
-# SageMath parsed files
-*.sage.py
-
-# Environments
-.env
-.venv
-env/
-venv/
-ENV/
-env.bak/
-venv.bak/
-
-# Spyder project settings
-.spyderproject
-.spyproject
-
-# Rope project settings
-.ropeproject
-
-# mkdocs documentation
-/site
-
-# mypy
-.mypy_cache/
-.dmypy.json
-dmypy.json
-
-# Pyre type checker
-.pyre/
+print('Введите букву для первого города:')
+pervayaBukva=str(input().lower())
+VvodGoroda=str()
+proverka=int()
+ispGoroda=list()
+lastBukva=str()
+Povtor=1
+K=0
+z=0
+proverkaNaZnakiIprobel()
+while len(pervayaBukva)==1:
+    if len(pervayaBukva)==1:
+        vnutrSpisok=[pervayaBukva*2]
+        lastBukva=pervayaBukva
+        ispGoroda=[pervayaBukva]
+        print(ispGoroda)
+        break
+    else:
+        print('введите одну букву')
+        pervayaBukva=str(input().lower())
+        vnutrSpisok = [pervayaBukva * 2]
+with open('SpisokGorodov.txt') as file:
+    for i in file:
+        vnutrSpisok.append(i.strip().lower())
+print('Введите название города на:',pervayaBukva)
+while VvodGoroda!='завершить':
+    VvodGoroda=str(input().lower())
+    proverkaNaEnter()
+    provNaPovtor(ispGoroda,VvodGoroda)
+    proverkaNaPravila(VvodGoroda,lastBukva)
+    if k==1:
+        if Povtor==0:
+            proverka=2
+        elif Povtor == 1:
+            provGorodov(vnutrSpisok,VvodGoroda)
+    elif k==0:
+        proverka=3
+    print(ispGoroda)
+    poslBukva=ispGoroda[-1]
+    if poslBukva[-1]== 'ь' and 'ъ':
+        lastBukva = poslBukva[-2]
+    else:
+        lastBukva=poslBukva[-1]
+    if proverka == 1:
+        print('Отлично!, введите город на букву:', lastBukva)
+    elif proverka==0:
+        print('Такого города нет, введите город на:', lastBukva)
+    elif proverka==2:
+        print('Данный город уже был, введите город на:', lastBukva)
+    elif proverka==3:
+        print('Данный город не начинается на:',lastBukva,'Введите город на букву:',lastBukva)
+    proverka=1
+    Povtor=1
